@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriGen - AI-Powered Nutrition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .fade-in { animation: fadeIn 1.5s ease-in-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+    <!-- Navigation Bar -->
+    <header class="bg-white shadow-md fixed w-full top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center p-4">
+            <div class="flex items-center space-x-3">
+                <img src="images/logo.jpg" alt="NutriGen Logo" class="h-10">
+                <h1 class="text-2xl font-bold text-green-600">NutriGen AI</h1>
+            </div>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="#" class="hover:text-green-600 transition">Home</a></li>
+                    <li><a href="nutrition.html" class="hover:text-green-600 transition">Food Search</a></li>
+                    <li><a href="meal-plan.html" class="hover:text-green-600 transition">Meal Plans</a></li>
+                    <li><a href="food_dna_analysis.html" class="hover:text-green-600 transition">Food DNA Analysis</a></li>
+                    <li><a href="about.html" class="hover:text-green-600 transition">About</a></li>
+                    <li><a href="contact.html" class="hover:text-green-600 transition">Contact</a></li>
+                    <li><a href="chatbot.html" class="bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-500 transition">Gemini AI</a></li> 
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative w-full h-screen flex items-center justify-center text-white fade-in" style="background: url('images/photo1.jpg') no-repeat center center / cover;">
+        <div class="p-10 rounded-lg text-center max-w-2xl">
+            <h2 class="text-5xl font-bold mb-4 drop-shadow-lg animate-pulse">AI-Powered Nutrition </h2>
+            <p class="text-lg mb-6 drop-shadow-lg">Get instant, accurate nutritional information for thousands of food items.</p>
+            
+            
+        </div>
+    </section>
+
+    <!-- Quick Access Features (Moved Above Sign-Up Block) -->
+    <section class="container mx-auto mt-10 p-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-2xl transform hover:-translate-y-1 transition">
+                <h3 class="text-xl font-semibold">🔍 Food Search</h3>
+                <p class="mt-2 text-gray-600">Find detailed nutritional facts for any food item.</p>
+                <a href="nutrition.html" class="inline-block mt-3 text-green-600 font-bold">Explore →</a>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-2xl transform hover:-translate-y-1 transition">
+                <h3 class="text-xl font-semibold">📋 Personalized Meal Plans</h3>
+                <p class="mt-2 text-gray-600">Get AI-generated meal plans tailored to your needs.</p>
+                <a href="meal-plan.html" class="inline-block mt-3 text-green-600 font-bold">Get Started →</a>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-2xl transform hover:-translate-y-1 transition">
+                <h3 class="text-xl font-semibold">🛒 Smart Grocery List</h3>
+                <p class="mt-2 text-gray-600">Generate a shopping list based on your meal plan.</p>
+                <a href="grocery-list.html" class="inline-block mt-3 text-green-600 font-bold">View List →</a>
+            </div>
+        </div>
+        <div class="mt-12 text-center bg-white p-6 rounded-lg shadow-md max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-gray-900">Empowering Personal Health with AI & Genetics</h2>
+            <p class="mt-3 text-gray-600 text-lg leading-relaxed">
+                NutriGen AI combines cutting-edge artificial intelligence and genetic analysis to craft personalized nutrition and fitness plans.
+                Our platform prioritizes accuracy and privacy by leveraging blockchain technology to secure genetic data without storing personal information.
+            </p>
+        </div>
+        
+    </section>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-2xl transform hover:-translate-y-1 transition">
+            <h3 class="text-xl font-semibold">🥗 Nutrition Plans</h3>
+            <p class="mt-2 text-gray-600">Unlock your health potential with nutrition plans customized to your genetic profile. Explore how your genes influence your dietary needs.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-2xl transform hover:-translate-y-1 transition">
+            <h3 class="text-xl font-semibold">🏋️ Optimized Fitness Strategies</h3>
+            <p class="mt-2 text-gray-600">Get personalized workout recommendations that align with your genetic predispositions for better, faster fitness results.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-2xl transform hover:-translate-y-1 transition">
+            <h3 class="text-xl font-semibold">🔐 Guaranteed Data Security</h3>
+            <p class="mt-2 text-gray-600">Rest assured, your genetic data is encrypted and secured using blockchain technology, ensuring privacy and protection without collecting any personal information.</p>
+        </div>
+    </div>
+    <section class="container mx-auto mt-10 p-6 flex flex-col md:flex-row items-center">
+        <!-- Left Side: Image -->
+        <div class="w-full md:w-1/2">
+            <img src="images/meal.jpg" alt="NutriGen AI" class="w-full rounded-lg shadow-lg">
+        </div>
+    
+        <!-- Right Side: Content -->
+        <div class="w-full md:w-1/2 p-6">
+            <h2 class="text-3xl font-bold text-gray-900">Discover the Power of NutriGen AI</h2>
+            <p class="mt-3 text-gray-600 text-lg leading-relaxed">Transform your nutrition journey with NutriGen AI, 
+                your personalized meal planning solution
+            </p>
+            <a href="meal-plan.html" class="inline-block bg-green-600 text-white font-bold py-3 px-6 mt-4 rounded-lg hover:bg-green-500 transition">Get Started</a>
+        </div>
+    </section>
+    <!-- Main Section -->
+<section class="flex flex-col items-center justify-center min-h-screen p-6">
+    <div class="w-full md:w-1/2 text-center">
+        <h2 class="text-3xl font-bold text-gray-900">Unlock Your Genetic Potential with NutriGen AI</h2>
+        <p class="mt-3 text-gray-600 text-lg leading-relaxed">
+            Experience the future of personalized health and wellness with NutriGen AI. Our suite of advanced tools, powered by artificial intelligence and informed by your unique genetic code, offers everything from meal planning to stress management. Step into a new era of health optimization tailored just for you.
+        </p>
+    </div>
+
+    <!-- Features Section -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10 w-full max-w-6xl">
+        
+        <!-- Meal Plan Generator -->
+        <div class="flex items-start space-x-4 p-4 bg-gray-100 rounded-lg shadow-md">
+            <svg class="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 3h16M4 21h16M12 3v18M7 6v12M17 6v12M9 6h6M9 18h6"></path>
+            </svg>
+            <div>
+                <h3 class="text-xl font-bold text-gray-900">Meal Plan Generator</h3>
+                <p class="text-gray-600">Harness AI to create personalized meal plans tailored to your genetic profile.</p>
+            </div>
+        </div>
+
+        <!-- Fitness Routine Designer -->
+        <div class="flex items-start space-x-4 p-4 bg-gray-100 rounded-lg shadow-md">
+            <svg class="w-12 h-12 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 6l12 12M6 18L18 6M9 9h6M9 15h6"></path>
+            </svg>
+            <div>
+                <h3 class="text-xl font-bold text-gray-900">Fitness Routine Designer</h3>
+                <p class="text-gray-600">Generate custom workout programs with AI guidance based on your genetics.</p>
+            </div>
+        </div>
+
+        <!-- Health Monitoring Dashboard -->
+        <div class="flex items-start space-x-4 p-4 bg-gray-100 rounded-lg shadow-md">
+            <svg class="w-12 h-12 text-purple-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 12h6l3-9 3 18 3-9h6"></path>
+            </svg>
+            <div>
+                <h3 class="text-xl font-bold text-gray-900">Health Monitoring Dashboard</h3>
+                <p class="text-gray-600">Track your health metrics in a user-friendly dashboard.</p>
+            </div>
+        </div>
+
+        <!-- Genetic Wellness Reports -->
+        <div class="flex items-start space-x-4 p-4 bg-gray-100 rounded-lg shadow-md">
+            <svg class="w-12 h-12 text-red-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 12h14M5 12l4-4M5 12l4 4M19 12l-4-4M19 12l-4 4"></path>
+            </svg>
+            <div>
+                <h3 class="text-xl font-bold text-gray-900">Genetic Wellness Reports</h3>
+                <p class="text-gray-600">Receive insights on how your genetics influence health and metabolism.</p>
+            </div>
+        </div>
+
+        <!-- Supplement Advisor -->
+        <div class="flex items-start space-x-4 p-4 bg-gray-100 rounded-lg shadow-md">
+            <svg class="w-12 h-12 text-yellow-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 3h14M5 21h14M5 3v18M19 3v18"></path>
+            </svg>
+            <div>
+                <h3 class="text-xl font-bold text-gray-900">Supplement Advisor</h3>
+                <p class="text-gray-600">Get AI-driven supplement recommendations tailored to your genetic needs.</p>
+            </div>
+        </div>
+
+        <!-- Mindfulness & Stress Management -->
+        <div class="flex items-start space-x-4 p-4 bg-gray-100 rounded-lg shadow-md">
+            <svg class="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2l1.66 3.34L17 6l-3.34 1.66L12 10l-1.66-2.34L7 6l3.34-1.66L12 2zM12 14l1.66 3.34L17 18l-3.34 1.66L12 22l-1.66-2.34L7 18l3.34-1.66L12 14z"></path>
+            </svg>
+            <div>
+                <h3 class="text-xl font-bold text-gray-900">Mindfulness & Stress Management</h3>
+                <p class="text-gray-600">Explore AI-generated mindfulness exercises for mental well-being.</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+<!-- Section Container -->
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<section class="relative w-full flex justify-center items-center p-6">
+    <!-- Background Image -->
+    <div class="w-full relative">
+        <img src="images/worldmap.png" alt="NutriGen AI" class="w-full max-w-4xl mx-auto rounded-lg">
+
+        <!-- Main Heading and Paragraph on Top -->
+        <div class="absolute top-4 left-1/2 transform -translate-x-1/2 text-center px-6">
+            <h2 class="text-3xl font-bold text-black">Revolutionizing Health with Genetics and AI</h2>
+            <p class="mt-3 text-black text-lg leading-relaxed">
+                Explore the future of personalized health with NutriGen AI, where innovative genetic insights meet advanced AI, founded and led by a multi-professional healthcare and data science expert.
+            </p>
+        </div>
+
+        <!-- Additional Content in Horizontal Line with Icons -->
+        <div class="absolute inset-0 flex justify-center items-end w-full px-6 pb-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-center w-full max-w-4xl">
+                <div class="bg-white bg-opacity-80 p-4 rounded-lg shadow-md flex flex-col items-center">
+                    <i class="fas fa-user-tie text-3xl text-black"></i>
+                    <h3 class="text-xl font-semibold text-black mt-2">Experienced Leadership</h3>
+                    <p class="text-black">10+ Years in Healthcare, 4+ Years in Data Science</p>
+                </div>
+
+                <div class="bg-white bg-opacity-80 p-4 rounded-lg shadow-md flex flex-col items-center">
+                    <i class="fas fa-globe text-3xl text-black"></i>
+                    <h3 class="text-xl font-semibold text-black mt-2">Global Vision</h3>
+                    <p class="text-black">Designed for Worldwide Accessibility and Impact</p>
+                </div>
+
+                <div class="bg-white bg-opacity-80 p-4 rounded-lg shadow-md flex flex-col items-center">
+                    <i class="fas fa-microchip text-3xl text-black"></i>
+                    <h3 class="text-xl font-semibold text-black mt-2">Health and Tech Synergy</h3>
+                    <p class="text-black">Merging Medical Expertise with AI to Optimize Health</p>
+                </div>
+
+                <div class="bg-white bg-opacity-80 p-4 rounded-lg shadow-md flex flex-col items-center">
+                    <i class="fas fa-users text-3xl text-black"></i>
+                    <h3 class="text-xl font-semibold text-black mt-2">Community-Driven Innovation</h3>
+                    <p class="text-black">Join our journey to shape the future of health</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Footer Section -->
+<footer class="w-full bg-gray-900 text-white py-8 px-6 mt-12 text-center">
+    <div class="max-w-4xl mx-auto">
+    
+        <img src="images/logo.jpg" alt="NutriGen AI Logo" class="mx-auto w-32 mb-4"> <h1 class="text-2xl font-bold text-green-600">NutriGen AI</h1>
+        <p class="text-lg leading-relaxed">Nutrigen AI is revolutionizing the way you approach nutrition with our innovative platform, delivering customized 7-day meal plans tailored to your individual dietary requirements and preferences.</p>
+        
+        <!-- Social Media Links -->
+        <div class="flex justify-center gap-4 mt-4">
+            <a href="#" class="text-blue-400 text-xl"><i class="fab fa-x-twitter"></i> X-Twitter</a>
+            <a href="#" class="text-blue-400 text-xl"><i class="fab fa-telegram"></i> Telegram</a>
+        </div>
+        
+        <!-- Navigation Links -->
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6">
+            <div>
+                <h3 class="font-bold text-lg">Other Pages</h3>
+                <ul class="text-gray-400">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Tokenomics</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-bold text-lg">Quick Links</h3>
+                <ul class="text-gray-400">
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Disclaimer</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <!-- Call to Action -->
+    <section class="bg-green-600 text-white text-center py-12 mt-10 fade-in">
+        <h2 class="text-3xl font-bold">Start Your AI-Driven Nutrition Journey Today!</h2>
+        <p class="mt-2 text-lg">Sign up now and get personalized meal plans instantly.</p>
+        <a href="signup.html" class="inline-block bg-white text-green-600 font-bold py-3 px-6 mt-4 rounded-lg hover:bg-gray-200 transition">Sign Up</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white text-center p-4 mt-10">
+        <p>&copy; 2025 NutriGen AI | Advancing Nutrition Science with AI</p>
+    </footer>
+
+    <script>
+        function searchFood() {
+            let query = document.getElementById("searchBox").value;
+            if(query) {
+                alert("Search feature is coming soon! You searched for: " + query);
+            }
+        }
+    </script>
+    
+
+</body>
+</html>

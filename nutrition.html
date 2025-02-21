@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Food Search & Nutrition Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body class="bg-gray-900 text-white flex flex-col justify-center items-center min-h-screen p-6">
+
+    <div class="w-full max-w-4xl bg-white text-black p-6 rounded-lg shadow-lg text-center">
+        <h2 class="text-3xl font-bold mb-4">Interactive Food Search & Nutrition Details</h2>
+        
+        <!-- Search Bar -->
+        <div class="flex items-center space-x-2 mb-6">
+            <input type="text" id="foodSearch" class="w-full p-3 border rounded-lg text-black" placeholder="Enter a food item...">
+            <button onclick="fetchNutrition()" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+                Search
+            </button>
+        </div>
+
+       
+
+        <!-- Nutrition Details Section -->
+        <div id="nutritionDetails" class="hidden p-4 bg-gray-100 rounded-lg">
+            <h3 class="text-xl font-bold" id="foodName"></h3>
+            <div class="relative">
+                <div class="bg-gray-300 h-6 w-full rounded-full overflow-hidden">
+                    <div id="barCalories" class="h-full bg-red-500" style="width: 0%;"></div>
+                </div>
+                <p><strong>Calories:</strong> <span id="calories"></span> kcal</p>
+            </div>
+            
+            <div class="relative mt-2">
+                <div class="bg-gray-300 h-6 w-full rounded-full overflow-hidden">
+                    <div id="barProtein" class="h-full bg-green-500" style="width: 0%;"></div>
+                </div>
+                <p><strong>Protein:</strong> <span id="protein"></span> g</p>
+            </div>
+            
+            <div class="relative mt-2">
+                <div class="bg-gray-300 h-6 w-full rounded-full overflow-hidden">
+                    <div id="barCarbs" class="h-full bg-blue-500" style="width: 0%;"></div>
+                </div>
+                <p><strong>Carbs:</strong> <span id="carbs"></span> g</p>
+            </div>
+            
+            <div class="relative mt-2">
+                <div class="bg-gray-300 h-6 w-full rounded-full overflow-hidden">
+                    <div id="barFats" class="h-full bg-yellow-500" style="width: 0%;"></div>
+                </div>
+                <p><strong>Fats:</strong> <span id="fats"></span> g</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let scene, camera, renderer, foodModel;
+
+        function init3D() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(50, 2, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({ alpha: true });
+            renderer.setSize(400, 250);
+            document.getElementById("food3D").appendChild(renderer.domElement);
+            camera.position.z = 5;
+
+            const geometry = new THREE.SphereGeometry(1, 32, 32);
+            const material = new THREE.MeshStandardMaterial({ color: 0xff6347 }); // Default color (tomato)
+            foodModel = new THREE.Mesh(geometry, material);
+            scene.add(foodModel);
+
+            const light = new THREE.PointLight(0xffffff, 1, 100);
+            light.position.set(10, 10, 10);
+            scene.add(light);
+
+            animate();
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            foodModel.rotation.y += 0.01;
+            renderer.render(scene, camera);
+        }
+
+        async function fetchNutrition() {
+            const foodQuery = document.getElementById("foodSearch").value.trim();
+            if (!foodQuery) {
+                alert("Please enter a food item.");
+                return;
+            }
+
+            try {
+                const response = await fetch("http://127.0.0.1:5000/get-nutrition", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ query: foodQuery })
+                });
+
+                const data = await response.json();
+                if (!data.foods || data.foods.length === 0) {
+                    alert("No nutrition data found.");
+                    return;
+                }
+
+                const foodItem = data.foods[0];
+                document.getElementById("foodName").innerText = foodItem.food_name;
+                document.getElementById("calories").innerText = foodItem.nf_calories;
+                document.getElementById("protein").innerText = foodItem.nf_protein;
+                document.getElementById("carbs").innerText = foodItem.nf_total_carbohydrate;
+                document.getElementById("fats").innerText = foodItem.nf_total_fat;
+                document.getElementById("nutritionDetails").classList.remove("hidden");
+
+                animateBars(foodItem.nf_calories, foodItem.nf_protein, foodItem.nf_total_carbohydrate, foodItem.nf_total_fat);
+                speakNutrition(foodItem);
+            } catch (error) {
+                alert("Error fetching data.");
+            }
+        }
+
+        function animateBars(calories, protein, carbs, fats) {
+            gsap.to("#barCalories", { width: Math.min(calories / 5, 100) + "%", duration: 1 });
+            gsap.to("#barProtein", { width: Math.min(protein * 10, 100) + "%", duration: 1 });
+            gsap.to("#barCarbs", { width: Math.min(carbs / 5, 100) + "%", duration: 1 });
+            gsap.to("#barFats", { width: Math.min(fats / 2, 100) + "%", duration: 1 });
+        }
+
+        function speakNutrition(foodItem) {
+            const message = new SpeechSynthesisUtterance(
+                `The food item ${foodItem.food_name} contains 
+                ${foodItem.nf_calories} calories, 
+                ${foodItem.nf_protein} grams of protein, 
+                ${foodItem.nf_total_carbohydrate} grams of carbs, 
+                and ${foodItem.nf_total_fat} grams of fat.`
+            );
+            speechSynthesis.speak(message);
+        }
+
+        init3D();
+    </script>
+    
+
+</body>
+</html>

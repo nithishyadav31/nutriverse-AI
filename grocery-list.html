@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Grocery List</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+
+    <div class="container mx-auto p-5">
+        <h1 class="text-center text-2xl font-semibold mb-5">Smart Grocery List Generator</h1>
+
+        <!-- Meal Plan Input -->
+        <div class="bg-white p-5 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold mb-3">Enter Your Meal Plan</h2>
+            <div class="mb-3">
+                <label for="mealPlan" class="block text-lg font-medium">Meal Plan (comma separated food items)</label>
+                <textarea id="mealPlan" rows="4" class="w-full p-3 text-gray-900 rounded-lg focus:outline-none" placeholder="E.g., Chicken Salad, Oatmeal, Rice, Beans, etc."></textarea>
+            </div>
+
+            <button onclick="generateGroceryList()" class="bg-green-600 text-white px-5 py-3 rounded-lg hover:bg-green-500 transition">Generate Grocery List</button>
+        </div>
+
+        <!-- Grocery List Output -->
+        <div class="bg-white p-5 rounded-lg shadow-md mt-5 hidden" id="groceryListContainer">
+            <h2 class="text-xl font-semibold mb-3">Your Smart Grocery List</h2>
+            <ul id="groceryList" class="list-disc pl-5"></ul>
+        </div>
+    </div>
+
+    <script>
+        // Sample food items and their corresponding grocery ingredients (you can expand it)
+        const foodToIngredients = {
+            "Chicken Salad": ["Chicken Breast", "Lettuce", "Tomatoes", "Cucumbers", "Olive Oil", "Lemon Juice"],
+            "Oatmeal": ["Oats", "Milk", "Honey", "Berries", "Almonds"],
+            "Rice": ["Rice", "Water", "Salt"],
+            "Beans": ["Canned Beans", "Garlic", "Onion", "Cilantro"]
+        };
+
+        // Function to generate the grocery list
+        function generateGroceryList() {
+            const mealPlanInput = document.getElementById("mealPlan").value.trim();
+            if (!mealPlanInput) {
+                alert("Please enter your meal plan!");
+                return;
+            }
+
+            // Split the meal plan into individual meal items
+            const mealItems = mealPlanInput.split(",").map(item => item.trim());
+
+            // Prepare the grocery list
+            const groceryList = new Set(); // Using Set to avoid duplicate ingredients
+
+            mealItems.forEach(meal => {
+                if (foodToIngredients[meal]) {
+                    foodToIngredients[meal].forEach(ingredient => groceryList.add(ingredient));
+                }
+            });
+
+            // Display the grocery list
+            const groceryListContainer = document.getElementById("groceryListContainer");
+            const groceryListElement = document.getElementById("groceryList");
+            
+            groceryListElement.innerHTML = ''; // Clear previous list
+            groceryList.forEach(item => {
+                const listItem = document.createElement("li");
+                listItem.textContent = item;
+                groceryListElement.appendChild(listItem);
+            });
+
+            // Show the grocery list container
+            groceryListContainer.classList.remove("hidden");
+        }
+    </script>
+
+</body>
+</html>

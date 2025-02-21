@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food DNA Analysis & Allergen Detector</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background: url('https://www.example.com/dna-background.jpg') no-repeat center center/cover;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+        input:focus {
+            border-color: #2a5298;
+            box-shadow: 0 0 10px rgba(42, 82, 152, 0.5);
+        }
+        .dna-symbol {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .alert {
+            display: none;
+            padding: 10px;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .alert-danger { background-color: red; }
+        .alert-warning { background-color: orange; }
+        .alert-success { background-color: green; }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen p-6">
+    <div class="w-full max-w-3xl container text-black p-6">
+        <div class="dna-symbol">
+            <img src="images/dna.jpeg" alt="DNA Symbol" width="80">
+        </div>
+        <h2 class="text-3xl font-bold text-center mb-4 text-gray-900">Food DNA Analysis & Allergen Detector</h2>
+        
+        <!-- Input Section -->
+        <div class="mb-6 flex">
+            <input type="text" id="foodSearch" class="w-full p-3 border-2 rounded-lg focus:outline-none" placeholder="Enter food name or scan barcode...">
+            <button onclick="searchFood()" class="ml-2 bg-blue-500 text-white px-4 py-3 rounded-lg hover:bg-blue-700">Search</button>
+        </div>
+
+        <!-- Alert for Risky Foods -->
+        <div id="alertBox" class="alert"></div>
+
+        <!-- Allergen Detection Section -->
+        <div id="allergenDetails" class="hidden p-6 bg-gray-100 rounded-lg shadow-md">
+            <h3 class="text-xl font-bold text-gray-800" id="foodName"></h3>
+            <p><strong>Potential Allergens:</strong> <span id="allergens" class="text-red-600"></span></p>
+            <p><strong>Genetic Compatibility:</strong> <span id="safeScore" class="text-green-600"></span>% Safe</p>
+            <p><strong>Alternative Foods:</strong> <span id="alternatives" class="text-blue-600"></span></p>
+            
+            <!-- Allergen Heatmap -->
+            <canvas id="allergenChart" class="mt-4"></canvas>
+        </div>
+    </div>
+
+    <script>
+        async function searchFood() {
+            const query = document.getElementById("foodSearch").value.trim();
+            if (query.length < 2) return;
+
+            const response = await fetch(`http://127.0.0.1:5000/get-allergen?food=${query}`);
+            const data = await response.json();
+
+            document.getElementById("foodName").innerText = data.name;
+            document.getElementById("allergens").innerText = data.allergens.join(", ") || "None";
+            document.getElementById("safeScore").innerText = data.safe_score;
+            document.getElementById("alternatives").innerText = data.alternatives.join(", ") || "No alternatives available";
+            document.getElementById("allergenDetails").classList.remove("hidden");
+
+            // Show alert based on risk level
+            const alertBox = document.getElementById("alertBox");
+            alertBox.style.display = "block";
+            if (data.safe_score < 40) {
+                alertBox.className = "alert alert-danger";
+                alertBox.innerText = "⚠️ High Risk! Avoid this food!";
+            } else if (data.safe_score < 70) {
+                alertBox.className = "alert alert-warning";
+                alertBox.innerText = "⚠️ Moderate Risk! Consume with caution.";
+            } else {
+                alertBox.className = "alert alert-success";
+                alertBox.innerText = "✅ Safe to consume!";
+            }
+
+            // Generate heatmap
+            new Chart(document.getElementById("allergenChart"), {
+                type: "bar",
+                data: {
+                    labels: ["Gluten", "Dairy", "Peanuts", "Soy", "Shellfish"],
+                    datasets: [{
+                        label: "Allergen Risk Level",
+                        data: data.allergen_risks,
+                        backgroundColor: ["#FF5733", "#FFC300", "#DAF7A6", "#FF33F6", "#3385FF"]
+                    }]
+                }
+            });
+        }
+    </script>
+</body>
+</html>

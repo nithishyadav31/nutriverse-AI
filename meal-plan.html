@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Meal Plan Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-black text-white flex justify-center items-center min-h-screen p-6">
+
+    <div class="w-full max-w-3xl bg-white text-black p-6 rounded-lg shadow-lg">
+        <h2 class="text-3xl font-bold text-center mb-4">AI Meal Plan Generator</h2>
+        <p class="text-center text-gray-700 mb-6">Enter your details and get your personalized nutrition plan now.</p>
+
+        <form id="mealPlanForm" class="space-y-4">
+            <label class="block">
+                Age (must be 18 or older):
+                <input type="number" min="18" id="age" class="w-full p-2 border rounded-lg" required>
+            </label>
+
+            <label class="block">
+                Weight (kg):
+                <input type="number" id="weight" class="w-full p-2 border rounded-lg" required>
+            </label>
+
+            <label class="block">
+                Height (cm):
+                <input type="number" id="height" class="w-full p-2 border rounded-lg" required>
+            </label>
+
+            <label class="block">
+                Average Sleep Hours per Night:
+                <input type="number" id="sleep" min="1" max="24" class="w-full p-2 border rounded-lg" required>
+            </label>
+
+            <label class="block">
+                Mental State:
+                <select id="mentalState" class="w-full p-2 border rounded-lg" required>
+                    <option value="">--Please choose an option--</option>
+                    <option value="Stressed">Stressed</option>
+                    <option value="Relaxed">Relaxed</option>
+                    <option value="Neutral">Neutral</option>
+                </select>
+            </label>
+
+            <label class="block">
+                Current Diseases or Medications:
+                <input type="text" id="diseases" class="w-full p-2 border rounded-lg">
+            </label>
+
+            <label class="block">
+                Food Allergies:
+                <input type="text" id="allergies" class="w-full p-2 border rounded-lg">
+            </label>
+
+            <label class="block">
+                Prohibited Foods (Cultural or Religious):
+                <input type="text" id="prohibitedFoods" class="w-full p-2 border rounded-lg">
+            </label>
+
+            <fieldset class="border p-4 rounded-lg">
+                <legend class="font-semibold">Your Goal (select all that apply):</legend>
+                <label class="block"><input type="checkbox" class="goal" value="Weight loss"> Weight loss</label>
+                <label class="block"><input type="checkbox" class="goal" value="Muscle gain"> Muscle gain</label>
+                <label class="block"><input type="checkbox" class="goal" value="Performance improvement"> Performance improvement</label>
+                <label class="block"><input type="checkbox" class="goal" value="Disease prevention"> Disease prevention</label>
+                <label class="block"><input type="checkbox" class="goal" value="Energy optimization"> Energy optimization</label>
+            </fieldset>
+
+            <label class="block">
+                Select Language:
+                <select id="language" class="w-full p-2 border rounded-lg">
+                    <option value="English">English</option>
+                    <option value="Spanish">Spanish</option>
+                    <option value="French">French</option>
+                </select>
+            </label>
+
+            <label class="block">
+                <input type="checkbox" id="terms" required> I agree to the Terms and Conditions
+            </label>
+
+            <button type="submit" class="w-full bg-black text-white p-3 rounded-lg hover:bg-gray-800">
+                Generate 7-Day Plan
+            </button>
+        </form>
+
+        <!-- Section to display the generated meal plan -->
+        <div id="mealPlanOutput" class="mt-6 p-4 bg-gray-800 text-white rounded-lg hidden"></div>
+    </div>
+
+    <script>
+        document.getElementById("mealPlanForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+    
+            // Collect user input
+            const formData = {
+                age: document.getElementById("age").value,
+                weight: document.getElementById("weight").value,
+                height: document.getElementById("height").value,
+                sleep: document.getElementById("sleep").value,
+                mentalState: document.getElementById("mentalState").value,
+                diseases: document.getElementById("diseases").value,
+                allergies: document.getElementById("allergies").value,
+                prohibitedFoods: document.getElementById("prohibitedFoods").value,
+                goals: Array.from(document.querySelectorAll(".goal:checked")).map(el => el.value),
+                language: document.getElementById("language").value
+            };
+    
+            console.log("User Data:", formData);
+    
+            // Send data to backend API
+            generateMealPlan(formData);
+        });
+    
+        async function generateMealPlan(formData) {
+            try {
+                const response = await fetch("http://127.0.0.1:5000/generate-meal-plan", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(formData)
+                });
+    
+                const data = await response.json();
+                console.log("Meal Plan:", data.meal_plan);
+    
+                let mealOutput = "<h3 class='text-xl font-bold mb-4'>Your 7-Day Meal Plan</h3>";
+
+                // Correct order of weekdays
+                const weekDaysOrder = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+                weekDaysOrder.forEach(day => {
+                    if (data.meal_plan[day]) {
+                        const meals = data.meal_plan[day];
+                        mealOutput += `
+                            <div class='bg-gray-700 p-4 rounded-lg mb-4'>
+                                <h4 class='text-lg font-semibold'>${day}</h4>
+                                <p><strong>🍳 Breakfast:</strong> ${meals.breakfast.meal} - ${meals.breakfast.calories} kcal</p>
+                                <p><strong>🥗 Lunch:</strong> ${meals.lunch.meal} - ${meals.lunch.calories} kcal</p>
+                                <p><strong>🍽️ Dinner:</strong> ${meals.dinner.meal} - ${meals.dinner.calories} kcal</p>
+                                <p><strong>🔥 Total Calories:</strong> ${meals.total_calories} kcal</p>
+                            </div>`;
+                    }
+                });
+    
+                // Show the meal plan output
+                const outputDiv = document.getElementById("mealPlanOutput");
+                outputDiv.innerHTML = mealOutput;
+                outputDiv.classList.remove("hidden");
+    
+            } catch (error) {
+                console.error("Error generating meal plan:", error);
+                alert("Failed to generate meal plan. Please try again later.");
+            }
+        }
+    </script>
+    
+</body>
+</html>
